@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 		fprintf(countFile, "%s\n", curr->word); 
 	} 
 	fclose(countFile);
-	
+    MergeSort(head);
 	freeMem(head);
 	
 	gettimeofday(&endTime, NULL);
