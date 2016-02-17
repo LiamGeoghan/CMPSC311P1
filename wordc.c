@@ -28,10 +28,12 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	FILE *inputFile;
-	char wordOne[10];
+	char wordOne[128];
 	Word *curr, *head;
+	Word *curr2;
 
 	head = curr = NULL;
+	curr2 = head;
 	inputFile = fopen(argv[1], "r");
 	//while(fgets(wordOne,sizeof(wordOne),inputFile))
 	while(fscanf(inputFile,"%s",wordOne)==1)
@@ -58,8 +60,21 @@ int main(int argc, char *argv[])
 	FILE *countFile;
 	countFile = fopen(argv[2],"w");
 	for(curr = head; curr; curr = curr->next)
+		curr->count = curr->count++;
+	for(curr = head; curr; curr = curr->next)
 	{
-		fprintf(countFile, "%s\n", curr->word); 
+		while((curr->next != NULL) && strcmp(curr->word,curr->next->word) == 0)
+		{		
+		if((curr->next != NULL) && strcmp(curr->word,curr->next->word) == 0)
+		{
+			curr->count = curr->count++;
+			curr->next  = curr->next->next;
+		}
+		}
+	} 
+	for(curr = head; curr; curr = curr->next)
+	{
+		fprintf(countFile, "%s, %d\n", curr->word, curr->count); 
 	} 
 	fclose(countFile);
 	freeMem(head);
@@ -114,12 +129,11 @@ void MergeSort(struct word_t** headref)
 	struct word_t* one;
 	struct word_t* two;
 	struct word_t* head= *headref;
-	
 	if (head == NULL || head->next == NULL)
 	{
 		return;
 	}
-	
+
 	Split(head, &one, &two);
 	MergeSort(&one);
 	MergeSort(&two);
@@ -129,7 +143,6 @@ void MergeSort(struct word_t** headref)
 struct word_t* SortedMerge(struct word_t* one, struct word_t* two)
 {
 	struct word_t* result = NULL;
-	
 	if (one == NULL)
 	{
 		return(two);
@@ -143,11 +156,13 @@ struct word_t* SortedMerge(struct word_t* one, struct word_t* two)
 	{
 		result = one;
 		result->next = SortedMerge(one->next, two);
+		return(result);
 	}
 	else
 	{
 		result = two;
 		result->next = SortedMerge(one, two->next);
+		return(result);
 	}
 	return(result);
 }
