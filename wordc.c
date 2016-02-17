@@ -3,7 +3,6 @@
 #include<time.h>
 #include<sys/time.h>
 #include<stdlib.h>
-#include<regex.h>
 
 struct word_t
 {
@@ -15,6 +14,9 @@ struct word_t
 typedef struct word_t Word;
 void freeMem(Word *head);
 void convertToNormal(char* string);
+void MergeSort(struct word_t** headref);
+struct word_t* SortedMerge(struct word_t* one, struct word_t* two);
+void Split(struct word_t* origin, struct word_t** front, struct word_t** back);
 
 int main(int argc, char *argv[])
 {
@@ -50,6 +52,8 @@ int main(int argc, char *argv[])
 		}
 	}
 	fclose(inputFile);
+	
+	MergeSort(&head);
 
 	FILE *countFile;
 	countFile = fopen(argv[2],"w");
@@ -105,10 +109,12 @@ void convertToNormal(char* string)
 		string[i] = tolower(string[i]);
 	}
 }
+
 void MergeSort(struct word_t** headref)
 {
-	struct word_t* one, two, head;
-	head = *headRef;
+	struct word_t* one;
+	struct word_t* two;
+	struct word_t* head= *headref;
 	
 	if (head == NULL || head->next == NULL)
 	{
@@ -120,17 +126,18 @@ void MergeSort(struct word_t** headref)
 	MergeSort(&two);
 	*headref = SortedMerge(one, two);
 }
+
 struct word_t* SortedMerge(struct word_t* one, struct word_t* two)
 {
 	struct word_t* result = NULL;
 	
 	if (one == NULL)
 	{
-		return(one);
+		return(two);
 	}
 	else if (two == NULL)
 	{
-		return(two);
+		return(one);
 	}
 	
 	if (one->word <= two->word)
@@ -141,10 +148,11 @@ struct word_t* SortedMerge(struct word_t* one, struct word_t* two)
 	else
 	{
 		result = two;
-		result->next = SortedMerge(a, b->next);
+		result->next = SortedMerge(one, two->next);
 	}
 	return(result);
 }
+
 void Split(struct word_t* origin, struct word_t** front, struct word_t** back)
 {
 	struct word_t* fast;
