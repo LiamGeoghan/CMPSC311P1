@@ -62,7 +62,6 @@ int main(int argc, char *argv[])
 		fprintf(countFile, "%s\n", curr->word); 
 	} 
 	fclose(countFile);
-    MergeSort(head);
 	freeMem(head);
 	
 	gettimeofday(&endTime, NULL);
@@ -118,7 +117,7 @@ void MergeSort(struct word_t** headref)
 	
 	if (head == NULL || head->next == NULL)
 	{
-		return 0;
+		return;
 	}
 	
 	Split(head, &one, &two);
@@ -140,7 +139,7 @@ struct word_t* SortedMerge(struct word_t* one, struct word_t* two)
 		return(one);
 	}
 	
-	if (one->word <= two->word)
+	if (strcmp(one->word, two->word) < 0 )
 	{
 		result = one;
 		result->next = SortedMerge(one->next, two);
