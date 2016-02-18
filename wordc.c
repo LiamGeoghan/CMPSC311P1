@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	FILE *inputFile;
-	char wordOne[128];
+	char wordOne[1000];
 	Word *curr, *head;
 	Word *curr2;
 
@@ -65,11 +65,11 @@ int main(int argc, char *argv[])
 	{
 		while((curr->next != NULL) && strcmp(curr->word,curr->next->word) == 0)
 		{		
-		if((curr->next != NULL) && strcmp(curr->word,curr->next->word) == 0)
-		{
-			curr->count = curr->count++;
-			curr->next  = curr->next->next;
-		}
+			if((curr->next != NULL) && strcmp(curr->word,curr->next->word) == 0)
+			{
+				curr->count = curr->count++;
+				curr->next  = curr->next->next;
+			}
 		}
 	} 
 	for(curr = head; curr; curr = curr->next)
