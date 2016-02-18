@@ -19,7 +19,7 @@ to calculate the final runtime and output it to a separate file.
 
 C
 The script opens with appropriate library imports, function declarations, and the struct
-definition. <stdio.h> is included for obvious reasons as it contains most of the c 
+definition. The wordc.h file just contains the following includes: <stdio.h> is included for obvious reasons as it contains most of the c 
 functionality. <string.h> is included for the convertToNormal function so the words can be
 converted to all lowercase. <time.h> and <sys/time.h> are included for the gettimeofday
 function so we can get the runtime of the program. <stdlib.h> is included for malloc so we
@@ -52,10 +52,30 @@ we're pretty sure it isn't the malloc since we didn't specify an actual size for
 
 (iv) Performance Results:
 
-SHELL 
-Average:
-Standard Deviation:
+SHELL
+
+Pangur Ban 
+Average: 460414000ns
+Standard Deviation: 384136015.57319ns
+
+Hamlet
+Average: 789062100ns
+Standard Deviation: 55850531.65857ns
+
+Arabian Nights
+Average: 4579840100ns
+Standard Deviation: 199096601.87538ns
 
 C
-Average:
-Standard Deviation:
+
+Pangur Ban
+Average: 19593.9ns
+Standard Deviation: 2702.39649ns
+
+Hamlet
+Average: 126595.2ns
+Standard Deviation: 4424.80522ns
+
+Arabian Nights
+Average: N/A
+Standard Deviation: N/A
